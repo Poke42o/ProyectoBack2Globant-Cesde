@@ -1,0 +1,9 @@
+2026-06-09 01:04:05.953821-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create table bookings (id uuid not null, date timestamp(6) not null, time enum ([*]) not null, primary key (id))"; expected "INTERSECTS (, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+create table bookings (id uuid not null, date timestamp(6) not null, time enum () not null, primary key (id)) [42001-240]
+2026-06-09 01:04:53.557098-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create table bookings (id uuid not null, date timestamp(6) not null, time enum ([*]) not null, primary key (id))"; expected "INTERSECTS (, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+create table bookings (id uuid not null, date timestamp(6) not null, time enum () not null, primary key (id)) [42001-240]
+2026-06-09 01:07:20.790753-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create table bookings (id uuid not null, date timestamp(6) not null, time enum ([*]) not null, primary key (id))"; expected "INTERSECTS (, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+create table bookings (id uuid not null, date timestamp(6) not null, time enum () not null, primary key (id)) [42001-240]
