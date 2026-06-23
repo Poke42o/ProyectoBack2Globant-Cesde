@@ -13,6 +13,7 @@ import com.example.morro420app.dtos.UserDto;
 import com.example.morro420app.mappers.IMapUser;
 import com.example.morro420app.models.User;
 import com.example.morro420app.repositories.IUserRepository;
+import com.example.morro420app.validators.IUserValidator;
 
 @Service
 public class UserServiceImp implements IUserService{
@@ -22,14 +23,18 @@ public class UserServiceImp implements IUserService{
     private final IMapUser userMap;
     private final IUserRepository userRepository;
 
-    public UserServiceImp(IMapUser userMap, IUserRepository userRepository) {
+    private final IUserValidator userValidator;
+
+    public UserServiceImp(IMapUser userMap, IUserRepository userRepository, IUserValidator userValidator) {
         this.userMap = userMap;
         this.userRepository = userRepository;
+        this.userValidator = userValidator;
     }
 
     @Override
     public UserDto saveUserInBD(User data) {
-        // TODO Auto-generated method stub
+
+        this.userValidator.validateNewUser(data);
 
         User saveUser=this.userRepository.save(data);
         return this.userMap.convert_model_to_dto(saveUser);
@@ -38,17 +43,17 @@ public class UserServiceImp implements IUserService{
 
     @Override
     public UserDto modifyUserInBD(User data, UUID id) {
-        // TODO Auto-generated method stub
 
         //buscando que el usuario exista en BD
         Optional<User> userToSearch=this.userRepository.findById(id);
         if (userToSearch.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User dont found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
             
         }
 
         User userFound=userToSearch.get();
         //Incluir validaciones (proximamente) y validar los datos nuevos
+        this.userValidator.validateDataModify(data);
         //Aplicar cambios
         userFound.setNames(data.getNames());
         User userModify=this.userRepository.save(userFound);
@@ -66,8 +71,11 @@ public class UserServiceImp implements IUserService{
 
     @Override
     public void deleteUserInBD(UUID id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteUserInBD'");
+   Optional<User> userToSearch=this.userRepository.findById(id);
+   if (userToSearch.isEmpty()) {
+    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found");
+    
+   }
     }
 
     @Override

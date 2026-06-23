@@ -3,7 +3,6 @@ package com.example.morro420app.controller;
 import java.util.List;
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,14 +15,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.morro420app.models.Booking;
-import com.example.morro420app.services.BookingService;
+import com.example.morro420app.services.IBookingService;
 
 @RestController
-@RequestMapping("/api/bookings")
+@RequestMapping("/api/v1/bookings")
 public class BookingController {
 
-    @Autowired
-    private BookingService bookingService;
+    private final IBookingService bookingService;
+
+    public BookingController(IBookingService bookingService) {
+        this.bookingService = bookingService;
+    }
 
     @PostMapping
     public ResponseEntity<Booking> createBooking(@RequestBody Booking booking) {
